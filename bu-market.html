@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Б/У Рынок</title>
+<style>
+:root{--bg:#f2f3f9;--card:#fff;--tx:#151a2d;--mu:#7a8299;--ac:#3b5bfd;--ac2:#7a4dff;--on:#fff;--bd:#e4e7f2;--tag:#ffe27a;--tagtx:#3a2c00;--sh:0 6px 20px rgba(30,40,90,.09);--g:linear-gradient(135deg,var(--ac),var(--ac2));--nh:64px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0c0f1a;--card:#161b2c;--tx:#eef1fb;--mu:#8c95b0;--ac:#7b93ff;--ac2:#a78bff;--on:#0b1020;--bd:#252c44;--sh:0 6px 20px rgba(0,0,0,.4)}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0c0f1a;--card:#161b2c;--tx:#eef1fb;--mu:#8c95b0;--ac:#7b93ff;--ac2:#a78bff;--on:#0b1020;--bd:#252c44;--sh:0 6px 20px rgba(0,0,0,.4)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:6px;padding:14px 16px 10px;background:var(--bg)}
+header h1{font-size:26px;margin:0;font-weight:800;letter-spacing:-.02em}
+#back{width:38px;height:38px;border-radius:50%;background:var(--card);box-shadow:var(--sh);border:0;color:var(--tx);font-size:22px;line-height:1;cursor:pointer;padding:0}
+main{max-width:640px;margin:0 auto;padding:4px 16px 120px}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:6;height:calc(var(--nh) + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);display:flex;align-items:center;justify-content:space-around;background:var(--card);box-shadow:0 -6px 24px rgba(30,40,90,.08);border-radius:22px 22px 0 0}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:0;color:var(--mu);font:600 11px system-ui,sans-serif;cursor:pointer;padding:6px}
+nav button.on{color:var(--ac)}
+nav button.plus{flex:none;width:58px;height:58px;margin-top:-30px;border-radius:50%;background:var(--g);color:#fff;box-shadow:0 8px 20px rgba(80,70,255,.4)}
+svg{display:block}
+input,textarea{width:100%;padding:13px 14px;border:1.5px solid var(--bd);border-radius:14px;background:var(--bg);color:var(--tx);font:inherit}
+input:focus,textarea:focus,button:focus-visible{outline:2px solid var(--ac);outline-offset:1px;border-color:transparent}
+.search{background:var(--card);box-shadow:var(--sh);border-color:transparent;border-radius:16px}
+label.l{display:block;font-weight:700;font-size:14px;margin:16px 0 6px}
+.panel{background:var(--card);border-radius:20px;padding:2px 16px 18px;box-shadow:var(--sh)}
+.btn{display:block;width:100%;padding:15px;border:0;border-radius:14px;background:var(--g);color:#fff;font:700 16px system-ui,sans-serif;cursor:pointer;text-align:center;text-decoration:none;margin-top:12px;box-shadow:0 6px 16px rgba(80,70,255,.28)}
+.btn.alt{background:var(--card);color:var(--ac);box-shadow:inset 0 0 0 1.5px var(--ac)}
+.btn.del{background:none;color:#d92d20;box-shadow:inset 0 0 0 1.5px #d92d20}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.card{background:var(--card);border-radius:18px;box-shadow:var(--sh);overflow:hidden;cursor:pointer}
+.pic{position:relative;aspect-ratio:4/5;background:var(--bd)}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.pic .price{position:absolute;left:8px;bottom:8px}
+.card .i{padding:10px 12px 12px}
+.card .t{font-weight:650;font-size:15px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.price{display:inline-block;padding:3px 11px;background:var(--tag);color:var(--tagtx);font-weight:800;font-size:14px;border-radius:999px}
+.price.big{font-size:20px;padding:4px 14px}
+.gal{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:20px}
+.gal img{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:1;object-fit:cover;width:100%;max-height:62vh;border-radius:20px}
+.mu{color:var(--mu);font-size:14px}
+.row{display:flex;gap:12px;align-items:center;padding:12px;background:var(--card);border-radius:18px;box-shadow:var(--sh);margin-top:10px;cursor:pointer}
+.av{width:52px;height:52px;border-radius:14px;object-fit:cover;background:var(--bd);flex:none}
+.row .tx{min-width:0;flex:1}.row .tx *{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#msgs{display:flex;flex-direction:column;gap:7px;margin:12px 0 80px}
+.m{max-width:80%;padding:9px 13px;border-radius:18px 18px 18px 5px;background:var(--card);box-shadow:var(--sh);align-self:flex-start;overflow-wrap:anywhere}
+.m.me{align-self:flex-end;background:var(--g);color:#fff;border-radius:18px 18px 5px 18px}
+.m small{display:block;opacity:.65;font-size:11px;margin-top:2px;text-align:right}
+.note{display:inline-block;margin-top:10px;padding:6px 12px;border-radius:999px;background:var(--card);box-shadow:var(--sh);color:var(--mu);font-size:12px}
+.send{position:fixed;left:0;right:0;bottom:calc(var(--nh) + env(safe-area-inset-bottom,0px));display:flex;gap:8px;padding:10px 16px;background:var(--bg)}
+.send input{flex:1;background:var(--card)}.send .btn{width:auto;margin:0;padding:0 20px;border-radius:14px}
+.ups{display:flex;gap:10px;flex-wrap:wrap}
+.th,.up{position:relative;width:92px;height:92px;border-radius:16px;overflow:hidden}
+.th img{width:100%;height:100%;object-fit:cover}
+.th button{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;font-size:16px;line-height:1;cursor:pointer;padding:0}
+.up{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:2px dashed var(--ac);color:var(--ac);font-weight:700;font-size:13px;cursor:pointer}
+.up input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;padding:0;border:0}
+.err{color:#d92d20;font-weight:600;margin-top:12px}
+.hero{text-align:center;padding:48px 10px}
+.orb{width:92px;height:92px;margin:0 auto 18px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:42px;box-shadow:0 12px 28px rgba(80,70,255,.3)}
+.hero h2{margin:0 0 6px;font-size:21px}.hero p{margin:0 0 8px;color:var(--mu)}.hero .btn{max-width:300px;margin:16px auto 0}
+</style>
+</head>
+<body>
+<header><button id="back" onclick="back()" aria-label="Назад">‹</button><h1 id="t"></h1></header>
+<main id="app"></main>
+<nav>
+<button data-v="feed" onclick="go('feed')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Лента</button>
+<button class="plus" data-v="new" onclick="go('new')" aria-label="Разместить объявление"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+<button data-v="chats" onclick="go('chats')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.2A8 8 0 1 1 21 12z"/></svg>Чаты</button>
+</nav>
+<script>
+const CUR='₽',TK='bu_token';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const money=p=>Number(p).toLocaleString('ru-RU')+' '+CUR;
+const hm=ts=>new Date(ts).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+let S={v:'feed',id:null,photos:[]};
+let TOK;try{TOK=localStorage.getItem(TK)}catch(e){}
+if(!TOK){TOK=Array.from(crypto.getRandomValues(new Uint8Array(12)),b=>b.toString(16).padStart(2,'0')).join('');try{localStorage.setItem(TK,TOK)}catch(e){}}
+let D={listings:[],chats:[]},ready=0;
+async function api(p,o={}){
+  const r=await fetch('/api'+p,{method:o.method||'GET',headers:{'Content-Type':'application/json','X-Token':TOK},body:o.body&&JSON.stringify(o.body)});
+  const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Ошибка сети');return j;
+}
+const L=id=>D.listings.find(l=>l.id===id);
+const C=id=>D.chats.find(c=>c.id===id);
+const lastTs=c=>c.msgs.length?c.msgs[c.msgs.length-1].ts:0;
+const pic=l=>l.photos[0]?`<img src="${l.photos[0]}" alt="">`:'';
+const PLUS='<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+
+function cardsHtml(q){
+  q=(q||'').toLowerCase();
+  const a=D.listings.filter(l=>(l.title+' '+l.desc).toLowerCase().includes(q)).sort((x,y)=>y.ts-x.ts);
+  if(!a.length)return '<div class="hero" style="grid-column:1/-1;padding:30px 0"><p>Ничего не найдено</p></div>';
+  return a.map(l=>`<div class="card" onclick="openItem('${l.id}')"><div class="pic">${pic(l)}<span class="price">${money(l.price)}</span></div><div class="i"><div class="t">${esc(l.title)}</div></div></div>`).join('');
+}
+const msgsHtml=c=>c.msgs.length?c.msgs.map(m=>`<div class="m ${m.me?'me':''}">${esc(m.t)}<small>${hm(m.ts)}</small></div>`).join(''):'<div class="hero" style="padding:24px 0"><p>Напишите первое сообщение продавцу</p></div>';
+const V={
+  feed:()=>ready!==1?`<div class="hero"><p>${ready?'Нет связи с сервером':'Загрузка…'}</p></div>`:D.listings.length?`<input class="search" type="search" placeholder="Поиск по объявлениям" oninput="$('#grid').innerHTML=cardsHtml(this.value)"><div class="grid" id="grid">${cardsHtml('')}</div>`
+    :`<div class="hero"><div class="orb">🏷️</div><h2>Здесь пока пусто</h2><p>Станьте первым, кто разместит объявление</p><button class="btn" onclick="go('new')">Разместить объявление</button></div>`,
+  new:()=>`<div class="panel"><label class="l" for="f-t">Название</label><input id="f-t" maxlength="80" placeholder="Например, iPhone 13 128 ГБ">
+<label class="l" for="f-p">Цена, ${CUR}</label><input id="f-p" type="number" min="0" inputmode="numeric" placeholder="0">
+<label class="l" for="f-n">Ваш номер телефона</label><input id="f-n" type="tel" placeholder="+7 900 000-00-00">
+<label class="l" for="f-d">Описание</label><textarea id="f-d" rows="4" placeholder="Состояние, комплект, причина продажи"></textarea>
+<label class="l">Фото (до 3)</label><div class="ups" id="ups"></div>
+<div class="err" id="err"></div>
+<button class="btn" onclick="publish()">Опубликовать</button></div>`,
+  item:()=>{
+    const l=L(S.id);if(!l)return '<div class="hero"><p>Объявление удалено</p></div>';
+    const tel=esc(l.phone.replace(/[^\d+]/g,''));
+    return `<div class="gal">${l.photos.map(p=>`<img src="${p}" alt="">`).join('')}</div>
+<div class="panel" style="margin-top:14px;padding-top:16px"><span class="price big">${money(l.price)}</span>
+<h2 style="margin:12px 0 2px;font-size:22px;line-height:1.2">${esc(l.title)}</h2><div class="mu">${new Date(l.ts).toLocaleDateString('ru-RU')}</div>
+<p style="white-space:pre-wrap;margin:14px 0">${esc(l.desc||'Без описания')}</p>
+<div class="mu">Телефон продавца: <a href="tel:${tel}" style="color:var(--ac);font-weight:600">${esc(l.phone)}</a></div>
+${l.mine?`<button class="btn del" onclick="delItem('${l.id}')">Снять с публикации</button>`:`<button class="btn" onclick="openChat('${l.id}')">Написать продавцу</button><a class="btn alt" href="tel:${tel}">Позвонить</a>`}</div>`;
+  },
+  chats:()=>{
+    const a=D.chats.filter(c=>L(c.lid)).sort((x,y)=>lastTs(y)-lastTs(x));
+    if(!a.length)return '<div class="hero"><div class="orb">💬</div><h2>Чатов пока нет</h2><p>Откройте объявление и нажмите «Написать продавцу»</p></div>';
+    return a.map(c=>{const l=L(c.lid),m=c.msgs[c.msgs.length-1];
+      return `<div class="row" onclick="showChat('${c.id}')"><div class="av">${pic(l).replace('<img','<img class="av"')}</div><div class="tx"><b>${esc(l.title)}${c.asSeller?' · вы продавец':''}</b><div class="mu">${m?esc(m.t):'Нет сообщений'}</div></div><span class="mu">${m?hm(m.ts):''}</span></div>`}).join('');
+  },
+  chat:()=>{
+    const c=C(S.id),l=c&&L(c.lid);if(!l)return '<div class="hero"><p>Чат недоступен</p></div>';
+    return `<div class="row" style="margin-top:0" onclick="openItem('${l.id}')"><div class="av">${pic(l).replace('<img','<img class="av"')}</div><div class="tx"><b>${esc(l.title)}</b><div class="mu">${money(l.price)}</div></div></div>
+<div id="msgs">${msgsHtml(c)}</div>
+<div class="send"><input id="mi" placeholder="Сообщение" maxlength="500" onkeydown="if(event.key==='Enter')sendMsg()"><button class="btn" onclick="sendMsg()">Отправить</button></div>`;
+  }
+};
+function render(){
+  const v=S.v,tab=v==='item'?'feed':v==='chat'?'chats':v;
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===tab));
+  $('#t').textContent={feed:'Б/У Рынок',new:'Новое объявление',chats:'Чаты',item:'Объявление',chat:'Чат'}[v];
+  $('#back').style.display=(v==='item'||v==='chat')?'block':'none';
+  $('#app').innerHTML=V[v]();
+  if(v==='new')ups();
+  window.scrollTo(0,v==='chat'?document.body.scrollHeight:0);
+}
+function go(v){S={v,id:null,photos:[]};render()}
+function back(){S.v==='chat'?go('chats'):go('feed')}
+async function openItem(id){
+  S.v='item';S.id=id;render();
+  const l=L(id);if(l&&l.n>l.photos.length){try{Object.assign(l,await api('/listings/'+id));if(S.v==='item'&&S.id===id)render()}catch(e){}}
+}
+function showChat(id){S.v='chat';S.id=id;render()}
+async function openChat(lid){
+  try{const c=await api('/chats',{method:'POST',body:{lid}});setChat(c);showChat(c.id)}catch(e){alert(e.message)}
+}
+async function delItem(id){
+  if(!confirm('Снять объявление с публикации?'))return;
+  try{await api('/listings/'+id,{method:'DELETE'});D.listings=D.listings.filter(l=>l.id!==id);D.chats=D.chats.filter(c=>c.lid!==id);go('feed')}catch(e){alert(e.message)}
+}
+function ups(){
+  $('#ups').innerHTML=S.photos.map((p,i)=>`<div class="th"><img src="${p}" alt=""><button onclick="rmPhoto(${i})" aria-label="Убрать фото">×</button></div>`).join('')
+   +(S.photos.length<3?`<label class="up">${PLUS}Фото<input type="file" accept="image/*" multiple onchange="addPhotos(this)"></label>`:'');
+}
+function rmPhoto(i){S.photos.splice(i,1);ups()}
+function addPhotos(inp){
+  const e=$('#err');e.textContent='';
+  [...inp.files].slice(0,3-S.photos.length).forEach(f=>{
+    const r=new FileReader();
+    r.onerror=()=>{e.textContent='Не удалось прочитать фото'};
+    r.onload=()=>{
+      const im=new Image();
+      im.onload=()=>{
+        if(S.photos.length>=3)return;
+        const k=Math.min(1,800/Math.max(im.width,im.height)),cv=document.createElement('canvas');
+        cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);
+        cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);
+        S.photos.push(cv.toDataURL('image/jpeg',.72));ups();
+      };
+      im.onerror=()=>{
+        if(f.size<1.2e6&&S.photos.length<3){S.photos.push(r.result);ups()}
+        else e.textContent='Не удалось обработать фото. Попробуйте JPG или PNG';
+      };
+      im.src=r.result;
+    };
+    r.readAsDataURL(f);
+  });
+}
+async function publish(){
+  const t=$('#f-t').value.trim(),p=$('#f-p').value,n=$('#f-n').value.trim(),d=$('#f-d').value.trim(),e=$('#err');
+  if(!t)return e.textContent='Укажите название';
+  if(!p||Number(p)<0)return e.textContent='Укажите цену';
+  if(n.replace(/\D/g,'').length<7)return e.textContent='Укажите номер телефона';
+  if(!d)return e.textContent='Добавьте описание';
+  if(!S.photos.length)return e.textContent='Добавьте хотя бы одно фото';
+  if(S.busy)return;S.busy=1;e.textContent='';
+  try{await api('/listings',{method:'POST',body:{title:t,desc:d,price:Number(p),phone:n,photos:S.photos}});await refresh();go('feed')}
+  catch(x){e.textContent=x.message}finally{S.busy=0}
+}
+async function sendMsg(){
+  const i=$('#mi'),t=i.value.trim(),c=C(S.id);if(!t||!c)return;
+  i.value='';
+  try{setChat(await api('/chats/'+c.id+'/messages',{method:'POST',body:{t}}))}catch(e){i.value=t;alert(e.message)}
+}
+function setChat(c){
+  const i=D.chats.findIndex(x=>x.id===c.id);i<0?D.chats.push(c):D.chats[i]=c;
+  if(S.v==='chat'&&S.id===c.id)upd(c);else if(S.v==='chats')render();
+}
+function upd(c){$('#msgs').innerHTML=msgsHtml(c);window.scrollTo(0,document.body.scrollHeight)}
+async function refresh(){
+  try{
+    const [a,b]=await Promise.all([api('/listings'),api('/chats')]);
+    D.listings=a.map(x=>{const o=D.listings.find(y=>y.id===x.id);return o&&o.photos.length>x.photos.length?{...x,photos:o.photos}:x});
+    D.chats=b;ready=1;
+  }catch(e){if(!ready)ready=2}
+  if(S.v==='feed'){const g=$('#grid');g?g.innerHTML=cardsHtml($('.search').value):render()}
+  else if(S.v==='chats'||(S.v==='item'&&!L(S.id))||(S.v==='chat'&&!C(S.id)))render();
+}
+render();refresh();
+try{const es=new EventSource('/api/events?tok='+TOK);es.addEventListener('listings',refresh);es.addEventListener('chat',e=>setChat(JSON.parse(e.data)));es.onopen=refresh}catch(e){}
+</script>
+</body>
+</html>
